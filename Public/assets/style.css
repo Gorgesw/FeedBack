@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
+    margin: 0;
+    padding: 20px;       
+}
+
+main {
+    background: white;
+    padding: 30px;        
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 15px;
+}
+
+.pergunta {
+    margin-bottom: 30px;
+}
+
+.escala label {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+h1 {
+    text-align: center;
+    color: #222;
+    margin-bottom: 25px;
+}
+
+
+.pergunta {
+    margin-bottom: 25px;
+}
+
+.titulo-pergunta {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+.escala {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-quadrado {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 55px;
+    height: 55px;
+
+    border: 2px solid #666;
+    border-radius: 8px;
+    background: #e0e0e0;
+
+    font-size: 20px;
+    cursor: pointer;
+
+    transition: 0.2s;
+    user-select: none;
+}
+
+
+.btn-quadrado input {
+    display: none;
+}
+
+.btn-quadrado span {
+    pointer-events: none;
+}
+
+.btn-quadrado:has(input:checked) {
+    background: #4caf50;
+    border-color: #3d8b43;
+    color: white;
+    font-weight: bold;
+}
+
+
+.texto-aberto {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.btn-enviar {
+    width: 100%;
+    padding: 15px;
+    background: #4caf50;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-enviar:hover {
+    background: #45a047;
+}
+
+.aviso {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}

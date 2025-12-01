@@ -14,8 +14,9 @@ class ControllerIndex extends Controller {
     public function index()
     {
         $this->model('pergunta'); 
-        $perguntas = ModelPergunta::getPerguntas(); 
+        $aPerguntas = new ModelPergunta();
+        $aPerguntas = $aPerguntas->getPerguntas(); 
 
-        $this->view('avaliacao', ['perguntas' => $perguntas]);
+        $this->view('avaliacao', ['perguntas' => $aPerguntas]);
     }
 }

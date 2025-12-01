@@ -9,7 +9,7 @@ class Controller
         extract($data);
 
         $viewFile = "view_{$viewName}.php";
-        $viewPath = __DIR__ . "/../Views/template/{$viewFile}";
+        $viewPath = __DIR__ . "/../Views/{$viewFile}";
 
         if (!file_exists($viewPath)) {
             die("Erro: View '{$viewFile}' não encontrada em: $viewPath");

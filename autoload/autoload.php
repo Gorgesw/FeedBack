@@ -1,41 +1,22 @@
 <?php
+
 spl_autoload_register(function ($class) {
+
     if (strpos($class, 'Src\\') !== 0) return;
 
-    $baseDir = __DIR__ . '/../Src/';
-    $relative = substr($class, 4);
-    $parts = explode('\\', $relative);
-    $className = array_pop($parts);
-    $dir = implode('/', $parts);
+    $base = __DIR__ . '/../Src/';
+    $parts = explode('\\', $class);
 
-    $file = '';
+    $type = strtolower($parts[1]);
+    $name = strtolower($parts[2]);  
 
-    // MODEL
-    if (strpos($className, 'Model') === 0) {
-        $fileName = strtolower(substr($className, 5));
-        $file = $baseDir . $dir . "/class_model_{$fileName}.php";
+    if ($type === 'controllers') {
+        $file = $base . "Controllers/class_controller_" . substr($name, 10) . ".php";
+    } elseif ($type === 'models') {
+        $file = $base . "Models/class_model_" . substr($name, 5) . ".php";
+    } else {
+        $file = $base . "Core/class_" . $name . ".php";
     }
 
-    // CONTROLLER 
-    elseif (strpos($className, 'Controller') === 0 && $className !== 'Controller') {
-        $fileName = strtolower(substr($className, 10));
-        $file = $baseDir . $dir . "/class_controller_{$fileName}.php";
-    }
-
-    // CORE
-    elseif ($className === 'Router') {
-        $file = $baseDir . $dir . "/class_router.php";
-    }
-    elseif ($className === 'Controller') {
-        $file = $baseDir . $dir . "/class_controller.php";
-    }
-
-    // DATABASE 
-    elseif ($className === 'Database') {
-        $file = $baseDir . $dir . "/class_database.php";
-    }
-
-    if ($file !== '' && file_exists($file)) {
-        require $file;
-    }
+    if (file_exists($file)) require $file;
 });

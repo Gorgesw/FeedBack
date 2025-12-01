@@ -14,7 +14,8 @@ class ControllerEnviaAvaliacao extends Controller
         }
 
         try {
-            ModelResposta::salvarRespostas($_POST);
+            $oModelResposta = new ModelResposta();
+            $oModelResposta->salvarRespostas($_POST);
             $this->redirect('/agradecimento');
         } catch (\Exception $e) {
             $_SESSION['erro'] = 'Erro ao enviar.';

@@ -1,28 +1,77 @@
 <?php
-namespace Src\Core;
+class conexaobd {
+    private $ip;
+    private $porta;
+    private $user;
+    private $password;
+    private $database;
+    private $dbconn;
+    private $status;
 
-use PDO;
-use PDOException;
+    public function __construct() {
+        $this->inicializaInstancia();
+    }
 
-class Database {
-    private static $pdo = null;
+    private function inicializaInstancia() {
+        $this->user = 'postgres';
+        $this->porta = 5432;
+        $this->ip = '127.0.0.1';
+        $this->ip = 'localhost';
+        $this->password = '072511';
+        $this->database = 'feedback'; 
+        $this->desconecta();    
+    }
 
-    public static function getInstance() {
-        if (self::$pdo === null) {
-            try {
-                $host = 'localhost';
-                $port = '5432';
-                $dbname = 'feedback';
-                $user = 'postgres';
-                $pass = '072511';
+    private function setStatus($sStatus) {
+        $this->status = $sStatus;
+    }
 
-                self::$pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $pass);
-                self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Erro de conexão com o banco: " . $e->getMessage());
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function conecta() {
+        try {
+            $this->setStatus('Conectando');
+            $this->dbconn = pg_connect("host=" . $this->ip . " port=" . $this->porta . " dbname=" . $this->database . " user=" . $this->user . " password=" . $this->password);
+            if ($this->dbconn) {
+                $this->setStatus('Conectado');
+                return true;
             }
+        } catch (Exception $e) {
+            $this->setStatus('Erro: ' . $e->getMessage());
         }
+        return false;
+    }
 
-        return self::$pdo;
+    public function getInternalConnection() {
+        return $this->dbconn;
+    }
+
+    public function desconecta() {
+        if ($this->dbconn) {
+            pg_close($this->dbconn);
+        }
+        $this->setStatus('Desconectado');
+    }
+
+    public function setIp($sIp) {
+        $this->ip = $sIp;
+    }
+
+    public function setPorta($iPorta) {
+        $this->porta = $iPorta;
+    }
+
+    public function setUser($sUser) {
+        $this->user = $sUser;
+    }
+
+    public function setPassword($sPassword) {
+        $this->password = $sPassword;
+    }
+
+    public function setDatabase($sDatabase) {
+        $this->database = $sDatabase;
     }
 }

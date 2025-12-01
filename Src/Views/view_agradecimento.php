@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obrigado pela sua avaliação</title>
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/assets/agradecimento.css">
 </head>
 <body class="bg-stone-950 text-stone-200">
     <main class="max-w-screen-md mx-auto mt-10 p-6 bg-stone-900 rounded-md text-center">
@@ -14,7 +14,7 @@
             pois nos ajuda a melhorar continuamente nossos serviços.
         </p>
         <a href="/" class="inline-block mt-6 px-4 py-2 bg-lime-600 text-black rounded hover:bg-lime-500">
-            Voltar
+            Clique para Voltar
         </a>
         <footer class="mt-6 text-sm text-stone-400">
             Sua avaliação espontânea é anônima, nenhuma informação pessoal é solicitada ou armazenada.

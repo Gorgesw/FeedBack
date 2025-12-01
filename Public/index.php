@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../autoload/autoload.php';
+ require_once __DIR__ . '/../autoload/autoload.php';
 
 
 use Src\Core\Router;
 
-
-Router::run();
+$Router = new Router();
+$Router->run();

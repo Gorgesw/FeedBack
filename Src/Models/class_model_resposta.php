@@ -1,43 +1,51 @@
 <?php
+
 namespace Src\Models;
 
-use Src\Core\Database;
+use Src\Core\conexaobd;
+use Src\Core\query;
 
 class ModelResposta
 {
-    public static function salvarRespostas(array $post): void
+    public function salvarRespostas(array $post)
     {
-        $respostas = $post['resposta'] ?? $post;
-        $pdo = Database::getInstance();
-        $pdo->beginTransaction();
-
-        try {
-            $stmt = $pdo->prepare("INSERT INTO tbavaliacao (criado_em) VALUES (NOW()) RETURNING id");
-            $stmt->execute();
-            $idAvaliacao = $stmt->fetchColumn();
-
-            $stmt = $pdo->prepare("
-                INSERT INTO tbresposta (id_avaliacao, id_pergunta, valor, texto, criado_em)
-                VALUES (:avaliacao, :pergunta, :valor, :texto, NOW())
-            ");
-
-            foreach ($respostas as $idPergunta => $resposta) {
-                $valor = is_numeric($resposta) ? (int)$resposta : null;
-                $texto = !is_numeric($resposta) ? trim($resposta) : null;
-                if ($texto === '') $texto = null;
-
-                $stmt->execute([
-                    ':avaliacao' => $idAvaliacao,
-                    ':pergunta'  => $idPergunta,
-                    ':valor'     => $valor,
-                    ':texto'     => $texto
-                ]);
-            }
-
-            $pdo->commit();
-        } catch (\Exception $e) {
-            $pdo->rollBack();
-            throw $e;
+        $respostas = $post['resposta']; 
+    
+        $conn = new conexaobd();
+        $conn->conecta();
+        $db = new query($conn);
+    
+        $db->insert('tbavaliacao', ['criado_em'], ['NOW()']);
+        $db->setSql("SELECT id FROM tbavaliacao ORDER BY criado_em DESC LIMIT 1");
+        $db->open();
+        $idAvaliacao = ($db->getNextRow()['id'] ?? null);
+    
+        if (!$idAvaliacao) {
+            $conn->desconecta();
+            return;
         }
+    
+        foreach ($respostas as $idPergunta => $resposta) {
+            $valor = null;
+            $texto = null;
+        
+            if (is_numeric($resposta)) {
+                $valor = (int) $resposta;   
+            } else {
+      
+            $resposta = trim($resposta);
+                if ($resposta !== '') {             
+                    $texto = $resposta;
+            }
+           
+            }
+        
+            $db->insert('tbresposta', 
+                ['id_avaliacao', 'id_pergunta', 'valor', 'texto', 'criado_em'],
+                [$idAvaliacao, $idPergunta, $valor, $texto, 'NOW()']
+            );
+        }
+    
+        $conn->desconecta();
     }
 }

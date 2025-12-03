@@ -15,15 +15,19 @@
             <?php foreach ($perguntas as $p): ?>
                 <div class="pergunta-card">
                     <div class="pergunta-info">
-                        <p>ID:    <?= $p['id'] ?></p>
+                        <p>ID: <?= $p['id'] ?></p>
                         <p>Texto: <?= $p['texto'] ?></p>
-                        <p>Tipo:  <?= $p['tipo'] ?></p>
-                        <p>Ordem: <?= $p['ordem'] ?></p>
+                        <p>Tipo: <?= $p['tipo'] ?></p>
+                        
+                        <?php if ($p['tipo'] == 'escala'): ?>
+                            <p>Escala: <?= $p['escala_max'] ?></p>
+                        <?php endif; ?>
+
+                        <p><strong>Ordem:</strong> <?= $p['ordem'] ?></p>
                     </div>
                     <div class="pergunta-acoes">
                         <a href="/pergunta/form?id=<?= $p['id'] ?>" class="btn-crud">Editar</a>
-                        <a href="/pergunta/excluir/<?= $p['id'] ?>" class="btn-excluir"
-                        >Excluir</a>
+                        <a href="/pergunta/excluir/<?= $p['id'] ?>" class="btn-excluir">Excluir</a>
                     </div>
                 </div>
             <?php endforeach; ?>

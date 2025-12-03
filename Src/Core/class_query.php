@@ -34,7 +34,6 @@ class query {
 
 
     public function update($stabela, $aColunas, $aValores, $sWhere) {
-        // Build the SET clause dynamically
         $setClauses = [];
         for ($i = 0; $i < count($aColunas); $i++) {
             $setClauses[] = $aColunas[$i] . ' = $' . ($i + 1);
@@ -48,7 +47,6 @@ class query {
     }
 
     public function insert($sTabela, $aColunas, $aValores) {
-        // Implementação de insert
         $colString = implode(', ', $aColunas);
         $paramMarkers = [];
         for ($i = 1; $i <= count($aValores); $i++) {

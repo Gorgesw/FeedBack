@@ -1,12 +1,15 @@
 -- 1. TABELA: PERGUNTAS (tbpergunta)
+DROP TABLE  tbpergunta CASCADE;
+DROP TABLE tbavaliacao CASCADE;
+DROP TABLE tbresposta CASCADE;
+
 CREATE TABLE tbpergunta (
     id SERIAL PRIMARY KEY,
     texto VARCHAR(500) NOT NULL,
     tipo VARCHAR(20) CHECK (tipo IN ('escala', 'aberta')) NOT NULL,
     escala_min SMALLINT DEFAULT 0,
     escala_max SMALLINT DEFAULT 5,
-    ordem INTEGER NOT NULL,
-    UNIQUE(ordem)
+    ordem INTEGER NOT NULL
 );
 
 -- 2. TABELA: AVALIAÇÃO (tbavaliacao) - agrupa respostas

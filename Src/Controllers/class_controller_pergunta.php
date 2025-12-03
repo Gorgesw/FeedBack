@@ -26,10 +26,31 @@ class ControllerPergunta extends Controller
 
     public function salvar(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+            $erro = $this->model->verificaExisteOrdem(
+                $_POST['ordem'],
+                $_POST['id'] ?? null
+            );
+    
+            if ($erro) {
+                return $this->aviso($erro);
+            }
+    
             $this->model->salvar($_POST);
+    
+            return $this->aviso("Pergunta salva com sucesso!");
         }
-        $this->redirect('/pergunta');
+    
+        return $this->aviso("Requisição inválida.");
     }
+    
+    
+
+    public function aviso($mensagem)
+{
+    $this->view('aviso', ['mensagem' => $mensagem]);
+}
+
 
     public function excluir($id){
 
@@ -39,7 +60,8 @@ class ControllerPergunta extends Controller
             $this->model->excluir((int) $id);
         }
 
-        $this->redirect('/pergunta');
+        return $this->aviso("Pergunta excluída com sucesso!");
+
     }
 
 }
